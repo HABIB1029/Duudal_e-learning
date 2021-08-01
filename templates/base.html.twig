@@ -1,19 +1,252 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block title %}Duudal
+			{% endblock %}
+		</title>
+		{# Run `composer require symfony/webpack-encore-bundle`
+												           and uncomment the following Encore helpers to start using Symfony UX #}
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+		{% block stylesheets %}
+			{#{{ encore_entry_link_tags('app') }}#}
+			<link href="{{asset('assets/img/favicon.png')}}" rel="icon">
+			<link
+			href="{{asset('assets/img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+
+			<!-- Google Fonts -->
+			<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+			<!-- Vendor CSS Files -->
+			<link href="{{asset('assets/vendor/animate.css/animate.min.css')}}" rel="stylesheet">
+			<link href="{{asset('assets/vendor/aos/aos.css')}}" rel="stylesheet">
+			<link href="{{asset('assets/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+			<link href="{{asset('assets/vendor/bootstrap-icons/bootstrap-icons.css')}}" rel="stylesheet">
+			<link href="{{asset('assets/vendor/boxicons/css/boxicons.min.css')}}" rel="stylesheet">
+			<link href="{{asset('assets/vendor/remixicon/remixicon.css')}}" rel="stylesheet">
+			<link
+			href="{{asset('assets/vendor/swiper/swiper-bundle.min.css')}}" rel="stylesheet">
+
+			<!-- Template Main CSS File -->
+			<link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
+
+		{% endblock %}
+
+		{% block javascripts %}
+			{#{{ encore_entry_script_tags('app') }}#}
+			<!-- Vendor JS Files --><script src="{{asset('assets/vendor/aos/aos.js')}}"> </script>
+			<script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+			<script src="{{asset('assets/vendor/php-email-form/validate.js')}}"></script>
+			<script src="{{asset('assets/vendor/purecounter/purecounter.js')}}"></script>
+			<script src="{{asset('assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
+
+			<!-- Template Main JS File -->
+			<script src="{{asset('assets/js/main.js')}}"></script>
+		{% endblock %}
+	</head>
+	<body>
+		{# templates dossiers vendor #}
+
+		<!-- ======= Header ======= -->
+			<header id="header" class="fixed-top"> <div class="container d-flex align-items-center">
+
+				<h1 class="logo me-auto">
+					<a href="{{path('app_home')}}">Le Matheux</a>
+				</h1>
+				<!-- Uncomment below if you prefer to use an image logo -->
+				<!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+				<nav id="navbar" class="navbar order-last order-lg-0">
+					<ul>
+						<li>
+							<a class="active" href="{{path('app_home')}}">Accueil</a>
+						</li>
+						<li>
+							<a href="{{path('app_cours')}}">Cours</a>
+						</li>
+						<li>
+							<a href="courses.html"></a>
+						</li>
+						<li>
+							<a href="{{path('app_document')}}">Document</a>
+						</li>
+						<li>
+							<a href="{{path('app_video')}}">Videos</a>
+						</li>
+						{# <li>
+													<a href="pricing.html">Pricing</a>
+												</li> #}
+
+						<li class="dropdown">
+							<a href="#">
+								<span>Niveau</span>
+								<i class="bi bi-chevron-down"></i>
+							</a>
+							<ul>
+								<li class="dropdown">
+									<a href="#">
+										<span>Moyen</span>
+										<i class="bi bi-chevron-right"></i>
+									</a>
+									<ul>
+										<li><a href="{{path('app_cours_6eme')}}">Sixième</a></li>
+										<li><a href="{{path('app_cours_5eme')}}">Cinquième</a></li>
+										<li><a href="{{path('app_cours_4eme')}}">Quatrième</a></li>
+										<li><a href="{{path('app_cours_3eme')}}">Troisième</a></li>
+									</ul>
+								</li>
+								<li class="dropdown">
+									<a href="#">
+										<span>Secodaire</span>
+										<i class="bi bi-chevron-right"></i>
+									</a>
+									<ul>
+										<li><a href="{{path('app_cours_2nde')}}">Seconde</a></li>
+										<li><a href="{{path('app_cours_1ereL')}}">Première L1 & L2</a></li>
+										<li><a href="{{path('app_cours_1ereS')}}">Première S</a></li>
+										<li><a href="{{path('app_cours_TleL')}}">Terminale L1 & L2</a></li>
+										<li><a href="{{path('app_cours_TleS')}}">Terminale S</a></li>
+									</ul>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="{{path('app_about')}}">A propos</a>
+						</li>
+						<li>
+							<form class="d-flex">
+								<input class="form-control me-sm-2" type="text" placeholder="Recherce">
+								<button class="btn btn-secondary my-2 my-sm-0" type="submit">Recherce</button>
+							</form>
+						</li>
+					</ul>
+					<i class="bi bi-list mobile-nav-toggle"></i>
+
+				</nav>
+				<!-- .navbar -->
+
+				{# <a href="courses.html" class="get-started-btn">Get Started</a> #}
+
+			</div>
+		</header>
+		<!-- End Header -->
+
+
+		{% block body %}{% endblock %}
+
+		<!-- ======= Footer ======= -->
+		<footer id="footer">
+			{# <div id="preloader"></div> #}
+			<a href="#" class="back-to-top d-flex align-items-center justify-content-center">
+				<i class="bi bi-arrow-up-short"></i>
+			</a>
+
+			<div class="footer-top">
+				<div class="container">
+					<div class="row">
+
+						<div class="col-lg-3 col-md-6 footer-contact">
+							<h3>Le Matheux</h3>
+							<p>
+								<br>
+								Parcelle Assainie U7, n 170<br>
+								United States
+								<br><br>
+								<strong>Téléphone:</strong>
+								+221 77 841 16 91<br>
+								<strong>Email:</strong>
+								habibdiallo92@gmail.com<br>
+							</p>
+						</div>
+
+						<div class="col-lg-2 col-md-6 footer-links">
+							<h4>Les bases</h4>
+							<ul>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="#">Les fonction usuelles</a>
+								</li>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="#">Factorisation</a>
+								</li>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="#">Formules</a>
+								</li>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="#">Arithmetiques</a>
+								</li>
+							</ul>
+						</div>
+
+						<div class="col-lg-3 col-md-6 footer-links">
+							<h4>Nos Services</h4>
+							<ul>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="#">Cours à domicile</a>
+								</li>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="#">Encadrement en ligne</a>
+								</li>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="#">Cours de vaccance</a>
+								</li>
+								<li>
+									<i class="bx bx-chevron-right"></i>
+									<a href="#">Documentations</a>
+								</li>
+
+							</ul>
+						</div>
+
+						<div class="col-lg-4 col-md-6 footer-newsletter">
+							<h4>Rejoignez notre newsletter</h4>
+							<p>Avoir des bases en science constitue une gage de reussite scolaire</p>
+							<form action="" method="post">
+								<input type="email" name="email"><input type="submit" value="S'abonner">
+							</form>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="container d-md-flex py-4">
+
+				<div class="me-md-auto text-center text-md-start">
+					<div class="copyright">
+						&copy; Copyright
+						<strong>
+							<span>Le Matheux</span>
+						</strong>. Tous les droits réservés
+					</div>
+				</div>
+				<div class="social-links text-center text-md-right pt-3 pt-md-0">
+					<a href="#" class="twitter">
+						<i class="bx bxl-twitter"></i>
+					</a>
+					<a href="#" class="facebook">
+						<i class="bx bxl-facebook"></i>
+					</a>
+					<a href="#" class="instagram">
+						<i class="bx bxl-instagram"></i>
+					</a>
+					<a href="#" class="google-plus">
+						<i class="bx bxl-skype"></i>
+					</a>
+					<a href="#" class="linkedin">
+						<i class="bx bxl-linkedin"></i>
+					</a>
+				</div>
+			</div>
+		</footer>
+		<!-- End Footer -->
+	</body>
 </html>
