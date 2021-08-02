@@ -31,7 +31,7 @@ class Cours
     private $description;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $creatAt;
 
@@ -91,12 +91,12 @@ class Cours
         return $this;
     }
 
-    public function getCreatAt(): ?\DateTimeImmutable
+    public function getCreatAt(): ?\DateTime
     {
         return $this->creatAt;
     }
 
-    public function setCreatAt(\DateTimeImmutable $creatAt): self
+    public function setCreatAt(\DateTime$creatAt): self
     {
         $this->creatAt = $creatAt;
 

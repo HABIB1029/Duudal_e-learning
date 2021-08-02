@@ -3,11 +3,13 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-         <!-- ======= Breadcrumbs ======= -->
+    <!-- ======= Breadcrumbs ======= -->
     <div class="breadcrumbs" data-aos="fade-in">
       <div class="container">
-        <h2>Espace Mathèmatique</h2>
-        <p>Acceder à des cours de Maths adaptés avec le programme du Ministère de l’Éducation Nationale </p>
+      {% for cours in cours %}
+        <h2>{{cours.title}}</h2>
+        <p>{{cours.description}} </p>
+      
       </div>
     </div>
     <!-- End Breadcrumbs -->
@@ -15,85 +17,24 @@
     <!-- ======= Features Section ======= -->
     <section id="features" class="features">
       <div class="container" data-aos="fade-up">
-
         <div class="row" data-aos="zoom-in" data-aos-delay="100">
           <div class="col-md-6 col-lg-6 mt-4">
             <div class="icon-box">
-              <i class="niveau" style="color: dark;">6ème</i>
-              <h3><a href="">Sixième</a></h3>
+              <i class="niveau" style="color: dark;">{{cours.niveau.title}}</i>
+              <h3><a href="">les fonction usuelles</a></h3>
             </div>
           </div>
           <div class="col-md-6 col-lg-6 mt-4">
             <div class="icon-box">
-              <i class="niveau" style="color: dark;">5ème</i>
-              <h3><a href="">Cinquième</a></h3>
+              <i class="niveau" style="color: dark;">{{cours.niveau.title}}</i>
+              <h3><a href="">les fonction usuelles</a></h3>
             </div>
           </div>
         </div>
-
-        <div class="row" data-aos="zoom-in" data-aos-delay="100">
-          <div class="col-md-6 col-lg-6 mt-4">
-            <div class="icon-box">
-              <i class="niveau" style="color: dark;">6ème</i>
-              <h3><a href="">Sixième</a></h3>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-6 mt-4">
-            <div class="icon-box">
-              <i class="niveau" style="color: dark;">5ème</i>
-              <h3><a href="">Cinquième</a></h3>
-            </div>
-          </div>
-        </div>
-
+      {% endfor %} 
       </div>
     </section>
     <!-- End Features Section -->
 
-     <!-- ======= Breadcrumbs ======= -->
-    <div class="breadcrumbs mt-2"  data-aos="fade-in">
-      <div class="container">
-        <h2>Espace Physique</h2>
-        <p>Dans cette espace vous aurez accès a des cours de phsiques de qualité qui sont en accord avec le programme du Ministère de l’Éducation Nationale</p>
-      </div>
-    </div>
-    <!-- End Breadcrumbs -->
-    
-    <!-- ======= Features Section ======= -->
-    <section id="features" class="features">
-      <div class="container" data-aos="fade-up">
-
-       <div class="row" data-aos="zoom-in" data-aos-delay="100">
-          <div class="col-md-6 col-lg-6 mt-4">
-            <div class="icon-box">
-              <i class="niveau" style="color: dark;">6ème</i>
-              <h3><a href="">Sixième</a></h3>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-6 mt-4">
-            <div class="icon-box">
-              <i class="niveau" style="color: dark;">5ème</i>
-              <h3><a href="">Cinquième</a></h3>
-            </div>
-          </div>
-        </div>
-
-        <div class="row" data-aos="zoom-in" data-aos-delay="100">
-          <div class="col-md-6 col-lg-6 mt-4">
-            <div class="icon-box">
-              <i class="niveau" style="color: dark;">6ème</i>
-              <h3><a href="">Sixième</a></h3>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-6 mt-4">
-            <div class="icon-box">
-              <i class="niveau" style="color: dark;">5ème</i>
-              <h3><a href="">Cinquième</a></h3>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-    <!-- End Features Section -->
+  
 {% endblock %}

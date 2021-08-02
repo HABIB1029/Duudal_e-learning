@@ -40,7 +40,7 @@ class Document
     private $isAvailable;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $ceatedAt;
 
@@ -54,6 +54,11 @@ class Document
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="document", orphanRemoval=true)
      */
     private $comments;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
 
     public function __construct()
     {
@@ -113,12 +118,12 @@ class Document
         return $this;
     }
 
-    public function getCeatedAt(): ?\DateTimeImmutable
+    public function getCeatedAt(): ?\DateTime
     {
         return $this->ceatedAt;
     }
 
-    public function setCeatedAt(\DateTimeImmutable $ceatedAt): self
+    public function setCeatedAt(\DateTime $ceatedAt): self
     {
         $this->ceatedAt = $ceatedAt;
 
@@ -163,6 +168,18 @@ class Document
                 $comment->setDocument(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
 
         return $this;
     }

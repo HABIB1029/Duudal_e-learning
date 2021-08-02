@@ -3,17 +3,35 @@
 namespace App\Controller;
 
 
+use App\Entity\Cours;
+use App\Entity\Comment;
+use App\Repository\CoursRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CoursController extends AbstractController
 {
+    private $repository;
+
+    /**
+    * var CoursRepository
+    */
+    public function __construct(CoursRepository $repo, EntityManagerInterface $manager)
+    {
+        $this->repository = $repo;
+        $this->manager = $manager;
+    }
+
+
     #[Route('/home/cours', name: 'app_cours')]
     public function cours(): Response
     {
+        $cours = $this->repository->findAll();
         return $this->render('cours/index.html.twig', [
-            'controller_name' => 'CoursController',
+            'cours'=> $cours,
         ]);
     }
 
@@ -104,4 +122,28 @@ class CoursController extends AbstractController
         ]);
     }
 
+    /**
+    * @Route("home/cours/{slug}", name="cours.show", requirements={"slug": "[a-z0-9\-]*"})
+    * @param Cours $cours
+    * @return Response
+    */
+    public function show(Cours $cours, Request $request): Response
+    {   
+        $comment = new Comment();
+        $commentform = $this->createForm(CommentType::class, $comment);
+        $commentform->handleRequest($request);
+        if ($commentform->isSubmitted() && $commentform->isValid()) {
+            $comment->setCreatedAt(new DateTime());
+            $cours->addComment($comment);
+            $this->em->persist($comment);
+            $this->em->flush();
+            $this->addFlash(type:'success', message:'Commentaire posté avec succés!');
+            return $this->redirectToRoute('cours_show', array('slug'=> $cours->getSlug()));
+        }
+        return $this->render('cours/show.html.twig', [
+            'commentform' => $commentform->createView(),
+            'cours' => $cours,
+        ]);
+    }
+    
 }
