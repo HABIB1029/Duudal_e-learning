@@ -38,16 +38,10 @@ class Comment
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Video::class, inversedBy="comments")
+     * @ORM\ManyToOne(targetEntity=Chapitre::class, inversedBy="comment")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $video;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Document::class, inversedBy="comments")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $document;
+    private $chapitre;
 
     // /**
     //  * @ORM\ManyToOne(targetEntity=Chapitre::class, inversedBy="comments")
@@ -120,27 +114,16 @@ class Comment
     //     return $this;
     // }
 
-    public function getVideo(): ?Video
+    public function getChapitre(): ?Chapitre
     {
-        return $this->video;
+        return $this->chapitre;
     }
 
-    public function setVideo(?Video $video): self
+    public function setChapitre(?Chapitre $chapitre): self
     {
-        $this->video = $video;
+        $this->chapitre = $chapitre;
 
         return $this;
     }
 
-    public function getDocument(): ?Document
-    {
-        return $this->document;
-    }
-
-    public function setDocument(?Document $document): self
-    {
-        $this->document = $document;
-
-        return $this;
-    }
 }

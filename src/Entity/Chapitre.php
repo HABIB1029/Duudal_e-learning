@@ -2,15 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\VideoRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Cocur\Slugify\Slugify;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ChapitreRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity(repositoryClass=VideoRepository::class)
+ * @ORM\Entity(repositoryClass=ChapitreRepository::class)
  */
-class Video
+class Chapitre
 {
     /**
      * @ORM\Id
@@ -25,12 +26,7 @@ class Video
     private $title;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $videoExtension;
-
-    /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $description;
 
@@ -45,24 +41,34 @@ class Video
     private $createdAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Cours::class, inversedBy="videos")
+     * @ORM\ManyToOne(targetEntity=Cours::class, inversedBy="chapitres")
      * @ORM\JoinColumn(nullable=false)
      */
     private $cours;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="video", orphanRemoval=true)
+     * @ORM\Column(type="string", length=255)
      */
-    private $comments;
+    private $documentExtension;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $videoExtension;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="chapitre", orphanRemoval=true)
+     */
+    private $comment;
+
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
+        $this->comment = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -78,18 +84,6 @@ class Video
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
-        return $this;
-    }
-
-    public function getVideoExtension(): ?string
-    {
-        return $this->videoExtension;
-    }
-
-    public function setVideoExtension(string $videoExtension): self
-    {
-        $this->videoExtension = $videoExtension;
 
         return $this;
     }
@@ -142,19 +136,57 @@ class Video
         return $this;
     }
 
+    public function getDocumentExtension(): ?string
+    {
+        return $this->documentExtension;
+    }
+
+    public function setDocumentExtension(string $documentExtension): self
+    {
+        $this->documentExtension = $documentExtension;
+
+        return $this;
+    }
+
+    public function getVideoExtension(): ?string
+    {
+        return $this->videoExtension;
+    }
+
+    public function setVideoExtension(string $videoExtension): self
+    {
+        $this->videoExtension = $videoExtension;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        // return $this->slug;
+        $slugger = new Slugify();
+        return $this->slug = $slugger->slugify($this->title);
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
     /**
      * @return Collection|Comment[]
      */
-    public function getComments(): Collection
+    public function getComment(): Collection
     {
-        return $this->comments;
+        return $this->comment;
     }
 
     public function addComment(Comment $comment): self
     {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setVideo($this);
+        if (!$this->comment->contains($comment)) {
+            $this->comment[] = $comment;
+            $comment->setChapitre($this);
         }
 
         return $this;
@@ -162,24 +194,12 @@ class Video
 
     public function removeComment(Comment $comment): self
     {
-        if ($this->comments->removeElement($comment)) {
+        if ($this->comment->removeElement($comment)) {
             // set the owning side to null (unless already changed)
-            if ($comment->getVideo() === $this) {
-                $comment->setVideo(null);
+            if ($comment->getChapitre() === $this) {
+                $comment->setChapitre(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
 
         return $this;
     }

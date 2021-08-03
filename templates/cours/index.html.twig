@@ -3,38 +3,43 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-    <!-- ======= Breadcrumbs ======= -->
-    <div class="breadcrumbs" data-aos="fade-in">
-      <div class="container">
-      {% for cours in cours %}
-        <h2>{{cours.title}}</h2>
-        <p>{{cours.description}} </p>
-      
-      </div>
-    </div>
-    <!-- End Breadcrumbs -->
+	<div 	class="container">
+  {% for a in cours %}
+		<!-- ======= Breadcrumbs ======= -->
+		<div class="breadcrumbs row" data-aos="fade-in">
+				<h2>{{a.cours.title}}</h2>
+				<p>{{a.cours.description}}
+				</p>
+			
+		</div>
+		<!-- End Breadcrumbs -->
 
-    <!-- ======= Features Section ======= -->
-    <section id="features" class="features">
-      <div class="container" data-aos="fade-up">
-        <div class="row" data-aos="zoom-in" data-aos-delay="100">
-          <div class="col-md-6 col-lg-6 mt-4">
-            <div class="icon-box">
-              <i class="niveau" style="color: dark;">{{cours.niveau.title}}</i>
-              <h3><a href="">les fonction usuelles</a></h3>
-            </div>
-          </div>
-          <div class="col-md-6 col-lg-6 mt-4">
-            <div class="icon-box">
-              <i class="niveau" style="color: dark;">{{cours.niveau.title}}</i>
-              <h3><a href="">les fonction usuelles</a></h3>
-            </div>
-          </div>
-        </div>
-      {% endfor %} 
-      </div>
-    </section>
-    <!-- End Features Section -->
+		<!-- ======= Features Section ======= -->
+		<section id="features" class="features">
+			<div data-aos="fade-up">
+					<div class="row" data-aos="zoom-in" data-aos-delay="100">
+						<div class="col-md-6 col-lg-6 mt-4">
+							<div class="icon-box">
+								<i class="niveau" style="color: dark;">{{a.cours.niveau.title}}</i>
+								<h3>
+									<a href="{{ path('app_show',{id: a.id, slug:  a.slug}) }}">{{a.title}}</a>
+								</h3>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-6 mt-4">
+							<div class="icon-box">
+								<i class="niveau" style="color: dark;">{{a.cours.niveau.title}}</i>
+								<h3>
+									<a href="{{ path('app_show',{id: a.id, slug:  a.slug}) }}">{{a.title}}</a>
+								</h3>
+							</div>
+						</div>
+					</div>
+				
+			</div>
+      {% endfor %}
+		</section>
+		<!-- End Features Section -->
+	</div>
 
-  
 {% endblock %}

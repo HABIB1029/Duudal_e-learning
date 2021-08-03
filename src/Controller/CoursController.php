@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Entity\Cours;
 use App\Entity\Comment;
 use App\Repository\CoursRepository;
+use App\Repository\ChapitreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,9 +18,9 @@ class CoursController extends AbstractController
     private $repository;
 
     /**
-    * var CoursRepository
+    * var ChapitreRepository
     */
-    public function __construct(CoursRepository $repo, EntityManagerInterface $manager)
+    public function __construct(ChapitreRepository $repo, EntityManagerInterface $manager)
     {
         $this->repository = $repo;
         $this->manager = $manager;
@@ -27,10 +28,28 @@ class CoursController extends AbstractController
 
 
     #[Route('/home/cours', name: 'app_cours')]
-    public function cours(): Response
+    /**
+    * @Route'/home/cours', name='app_cours')
+    * @param Chapitre $cours
+    * @return Response
+    */
+    public function index(): Response
     {
         $cours = $this->repository->findAll();
         return $this->render('cours/index.html.twig', [
+            'cours'=> $cours,
+        ]);
+    }
+
+    /**
+    * @Route("home/cours/{slug}", name="app_show", requirements={"slug": "[a-z0-9\-]*"})
+    * @param Cours $cours
+    * @return Response
+    */
+    public function show(Cours $cours, Request $request): Response
+    {   
+        $cours = $this->repository->findAll();
+        return $this->render('cours/show.html.twig', [
             'cours'=> $cours,
         ]);
     }
@@ -122,28 +141,6 @@ class CoursController extends AbstractController
         ]);
     }
 
-    /**
-    * @Route("home/cours/{slug}", name="cours.show", requirements={"slug": "[a-z0-9\-]*"})
-    * @param Cours $cours
-    * @return Response
-    */
-    public function show(Cours $cours, Request $request): Response
-    {   
-        $comment = new Comment();
-        $commentform = $this->createForm(CommentType::class, $comment);
-        $commentform->handleRequest($request);
-        if ($commentform->isSubmitted() && $commentform->isValid()) {
-            $comment->setCreatedAt(new DateTime());
-            $cours->addComment($comment);
-            $this->em->persist($comment);
-            $this->em->flush();
-            $this->addFlash(type:'success', message:'Commentaire posté avec succés!');
-            return $this->redirectToRoute('cours_show', array('slug'=> $cours->getSlug()));
-        }
-        return $this->render('cours/show.html.twig', [
-            'commentform' => $commentform->createView(),
-            'cours' => $cours,
-        ]);
-    }
+    
     
 }

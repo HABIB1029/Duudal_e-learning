@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminCoursController!{% endblock %}
+
+{% block body %}
+<div class="container-fluid " style="margin-top:100px">
+		<h1 class="text-center">Gérer les cours</h1>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Titre</th>
+					<th>cours</th>
+                    <th>niveau</th>
+                    <th> Disponibilité</th>
+					<th>Actions</Disponibilité>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a in chap %}
+
+
+					<tr>
+						<td>{{ a.title }}</td>
+						<td>{{ a.cours.title }}</td>
+						<td>{{ a.cours.niveau.title}}</td>
+						{% if  a.isAvailable == true %}
+						<td><i class="fas fa-toggle-on"></i></td>
+						{% else %}
+							<td><i class="fas fa-toggle-off"></i></td>
+						{% endif %}
+						<td><a href="#" class="btn btn-secondary">
+                            <i class="fas fa-edit"></i></a>
+							<a href="#" class="btn btn-danger" 
+                            onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')" >
+                            <i class="fas fa-trash-alt"></i></a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="btn btn-secondary">
+					<a href="#">
+					<u style="color:white;">Publier une cours</u> </a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
