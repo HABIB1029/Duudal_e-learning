@@ -602,6 +602,22 @@ section {
 
 }
 /*--------------------------------------------------------------
+# form
+--------------------------------------------------------------*/
+#form{
+  /* max-width: 800px;
+  height: 600px; */
+  margin:auto;
+  margin-top: 10px;
+  background-color:#7bda97;
+  border-radius: 20px;
+  padding: 40px;
+  color:#000;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px #fff solid;
+}
+/*--------------------------------------------------------------
 # cours
 --------------------------------------------------------------*/
 .niveau{

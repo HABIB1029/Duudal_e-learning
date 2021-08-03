@@ -1,10 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminCoursController!{% endblock %}
+{% block title %}admin{% endblock %}
 
 {% block body %}
 <div class="container-fluid " style="margin-top:100px">
-		<h1 class="text-center">Gérer les cours</h1>
+		<h2 class="text-center">Gérer les cours</h2>
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -28,9 +28,9 @@
 						{% else %}
 							<td><i class="fas fa-toggle-off"></i></td>
 						{% endif %}
-						<td><a href="#" class="btn btn-secondary">
+						<td><a href="{{ path('app_admin.edit', {id: a.id}) }}" class="btn btn-secondary">
                             <i class="fas fa-edit"></i></a>
-							<a href="#" class="btn btn-danger" 
+							<a href="{{ path('app_admin.delete', {id: a.id}) }}" class="btn btn-danger" 
                             onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')" >
                             <i class="fas fa-trash-alt"></i></a>
 						</td>
@@ -41,7 +41,7 @@
 		<div class="row">
 			<div class="col-md-3">
 				<div class="btn btn-secondary">
-					<a href="#">
+					<a href="{{ path('app_admin.new')}}">
 					<u style="color:white;">Publier une cours</u> </a>
 				</div>
 			</div>

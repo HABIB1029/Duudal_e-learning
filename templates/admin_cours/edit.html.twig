@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}edit
+{% endblock %}
+{% block body %}
+	{# {{ include("admin_cours/form.html.twig", {form: form, button: 'Editer'})}} #}
+	<div class="container" id="form" style="margin-top:100px">
+		<h2 class="text-center">Editer un Chapitre</h2>
+		{{form_start(form)}}
+		<div class="form-group mt-2">
+			{{ form_row(form.title) }}
+		</div>
+		<div class="form-group mt-2">
+			{{ form_row(form.description) }}
+		</div>
+
+		<div class="form-row mt-2">
+			{{ form_row(form.documentExtension) }}
+		</div>
+		<div class="form-row mt-2">
+			{{ form_row(form.videoExtension) }}
+		</div>
+
+		<div class="col-md-4 form-group mt-2">
+			<div class="form-check">
+
+				{{ form_row(form.isAvailable) }}
+			</div>
+		</div>
+		<button type="submit" class="btn btn-primary mt-2">{{button|default('Editer')}}</button>
+		{{form_end(form)}}
+	</div>
+
+{% endblock %}

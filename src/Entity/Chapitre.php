@@ -62,7 +62,7 @@ class Chapitre
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="chapitre", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="chapitre", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $comment;
 
@@ -117,11 +117,13 @@ class Chapitre
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): self
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function setCreatAt()
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
+        $this->creatAt = new \DateTime();
     }
 
     public function getCours(): ?Cours
@@ -160,18 +162,21 @@ class Chapitre
         return $this;
     }
 
-    public function getSlug(): ?string
+    /**
+    *@ORM\PrePersist
+    *@ORM\PreUpdate
+    */
+    public function initSlug()
     {
-        // return $this->slug;
-        $slugger = new Slugify();
-        return $this->slug = $slugger->slugify($this->title);
+        
+            $slugger = new Slugify();
+            return $this->slug = $slugger->slugify($this->title);
+        
     }
 
-    public function setSlug(string $slug): self
+    public function getSlug(): ?string
     {
-        $this->slug = $slug;
-
-        return $this;
+        return $this->slug;
     }
 
     /**
