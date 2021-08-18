@@ -23,12 +23,12 @@ class Cours
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private $coursTitle;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $description;
+    private $coursDetails;
 
     /**
      * @ORM\Column(type="datetime")
@@ -38,16 +38,16 @@ class Cours
     /**
      * @ORM\Column(type="boolean")
      */
-    private $IsAvailable;
+    private $Available;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Niveau::class, inversedBy="cours")
+     * @ORM\ManyToOne(targetEntity=Niveau::class, inversedBy="cours", cascade={"persist", "remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $niveau;
 
     /**
-     * @ORM\OneToMany(targetEntity=Chapitre::class, mappedBy="cours", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Chapitre::class, mappedBy="cours", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $chapitres;
 
@@ -61,50 +61,53 @@ class Cours
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getCoursTitle(): ?string
     {
-        return $this->title;
+        return $this->coursTitle;
     }
 
-    public function setTitle(string $title): self
+    public function setCoursTitle(string $coursTitle): self
     {
-        $this->title = $title;
+        $this->coursTitle = $coursTitle;
 
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getCcoursDetails(): ?string
     {
-        return $this->description;
+        return $this->coursDetails;
     }
 
-    public function setDescription(string $description): self
+    public function setCoursDetails(string $coursDetails): self
     {
-        $this->description = $description;
+        $this->coursDetails = $coursDetails;
 
         return $this;
     }
 
-    public function getCreatAt(): ?\DateTime
+    public function getCreatAt(): ?\DateTimeInterface
     {
         return $this->creatAt;
     }
 
-    public function setCreatAt(\DateTime  $creatAt): self
-    {
-        $this->creatAt = $creatAt;
 
-        return $this;
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+    */
+    public function setCreatAt()
+    {
+        $this->creatAt = new \DateTime();
     }
 
-    public function getIsAvailable(): ?bool
+    public function getAvailable(): ?bool
     {
-        return $this->IsAvailable;
+        return $this->Available;
     }
 
-    public function setIsAvailable(bool $IsAvailable): self
+    public function setAvailable(bool $Available): self
     {
-        $this->IsAvailable = $IsAvailable;
+        $this->Available = $Available;
 
         return $this;
     }

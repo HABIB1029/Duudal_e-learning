@@ -11,6 +11,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @ORM\Entity(repositoryClass=ChapitreRepository::class)
  */
+
+ /**
+ * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
+ */
 class Chapitre
 {
     /**
@@ -112,18 +117,19 @@ class Chapitre
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
+
     /**
      * @ORM\PrePersist
      * @ORM\PreUpdate
-     */
-    public function setCreatAt()
+    */
+    public function setCreatedAt()
     {
-        $this->creatAt = new \DateTime();
+        $this->createdAt = new \DateTime();
     }
 
     public function getCours(): ?Cours

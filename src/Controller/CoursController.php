@@ -4,9 +4,10 @@ namespace App\Controller;
 
 
 use App\Entity\Cours;
-use App\Entity\Comment;
+use App\Entity\Niveau;
+use App\Controller\CoursType;
+use App\Controller\NiveauType;
 use App\Repository\CoursRepository;
-use App\Repository\ChapitreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,127 +21,77 @@ class CoursController extends AbstractController
     /**
     * var ChapitreRepository
     */
-    public function __construct(ChapitreRepository $repo, EntityManagerInterface $manager)
+    public function __construct(CoursRepository $repo, EntityManagerInterface $manager)
     {
         $this->repository = $repo;
         $this->manager = $manager;
     }
+ 
+    // /**
+    //  * @Route("/new", name="cours_new")
+    //  * @param  Cours $cours
+    //  * @param Request $request
+    //  * @return \Symfony\Component\HttpFoundation\Response
+    //  */
+    // public function new(Request $request, EntityManagerInterface $manager): Response
+    // {
+    //     $cours = new Cours();
+    //     $form = $this->createForm( CoursType::class, $cours); 
+    //     $form->handleRequest($request);
 
+    //     if($form->isSubmitted() && $form->isValid()){
+    //         $this->manager->persist($cours);
+    //         $this->manager->flush();
+    //         return $this->redirectToRoute('app_admin');
+    //     }
+    //     return $this->render('cours/new.html.twig', [
+    //         'cours' => $cours,
+    //         'form' => $form->createView(),
+    //     ]);
+    // }
 
-    #[Route('/home/cours', name: 'app_cours')]
+/**
+ * @Route("/new/{id}", name="cours_new", methods="GET|POST")
+ */
+public function new(Request $request, Niveau $niveau): Response
+{
+    $cours = new Cours();
+    // already set a cours, so as to not need add that field in the form (in ChapitreType)
+    $cours->setNiveau($niveau);
+
+    $form = $this->createForm(CoursType::class, $cours);
+    $form->handleRequest($request);
+    if ($form->isSubmitted() && $form->isValid()) {
+        $this->manager->persist($cours);
+        $this->manager->flush();
+        return $this->redirectToRoute('app_admin');
+    }
+    return $this->render('cours/new.html.twig', [
+        'cours' => $cours,
+        'form' => $form->createView(),
+    ]);
+}
+
     /**
-    * @Route'/home/cours', name='app_cours')
-    * @param Chapitre $cours
-    * @return Response
-    */
-    public function index(): Response
+     * @Route("/{id}/edit", name="cours_edit")
+     * @param  Cours $cours
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function edit(Request $request, EntityManagerInterface $manager): Response
     {
-        $cours = $this->repository->findAll();
-        return $this->render('cours/index.html.twig', [
-            'cours'=> $cours,
+        $form = $this->createForm( CoursType::class, $cours); 
+        $form->handleRequest($request);
+        
+        if($form->isSubmitted() && $form->isValid()){
+            $manager->persist($cours);
+            $this->manager->flush();
+            return $this->redirectToRoute('app_admin');
+        }
+        return $this->render('cours/edit.html.twig', [
+            'cours' => $cours,
+            'form' => $form->createView(),
         ]);
     }
-
-    /**
-    * @Route("home/cours/{slug}", name="app_show", requirements={"slug": "[a-z0-9\-]*"})
-    * @param Cours $cours
-    * @return Response
-    */
-    public function show(Cours $cours, Request $request): Response
-    {   
-        $cours = $this->repository->findAll();
-        return $this->render('cours/show.html.twig', [
-            'cours'=> $cours,
-        ]);
-    }
-
-    #[Route('/home/documents', name: 'app_document')]
-    public function document(): Response
-    {
-        return $this->render('cours/document.html.twig', [
-            'document' => 'documents',
-        ]);
-    }
-    
-    #[Route('/home/videos', name: 'app_video')]
-    public function video(): Response
-    {
-        return $this->render('cours/video.html.twig', [
-            'video' => 'videos',
-        ]);
-    } 
-    
-    #[Route('/home/cours/6eme', name: 'app_cours_6eme')]
-    public function cours1(): Response
-    {
-        return $this->render('cours/cour1.html.twig', [
-            'cour1' => 'cours1',
-        ]);
-    }
-
-    #[Route('/home/cours/5eme', name: 'app_cours_5eme')]
-    public function cours2(): Response
-    {
-        return $this->render('cours/cour2.html.twig', [
-            'cour2' => 'cours2',
-        ]);
-    }
-
-    #[Route('/home/cours/4eme', name: 'app_cours_4eme')]
-    public function cours3(): Response
-    {
-        return $this->render('cours/cour3.html.twig', [
-            'cour3' => 'cours3',
-        ]);
-    }
-
-    #[Route('/home/cours/3eme', name: 'app_cours_3eme')]
-    public function cours4(): Response
-    {
-        return $this->render('cours/cour4.html.twig', [
-            'cour4' => 'cours4',
-        ]);
-    }
-
-    #[Route('/home/cours/2nde', name: 'app_cours_2nde')]
-    public function cours5(): Response
-    {
-        return $this->render('cours/cour5.html.twig', [
-            'cour5' => 'cours5',
-        ]);
-    }
-    #[Route('/home/cours/1ereS', name: 'app_cours_1ereS')]
-    public function cours6(): Response
-    {
-        return $this->render('cours/cour6.html.twig', [
-            'cour6' => 'cours6',
-        ]);
-    }
-
-    #[Route('/home/cours/1ereL', name: 'app_cours_1ereL')]
-    public function cour7(): Response
-    {
-        return $this->render('cours/cour7.html.twig', [
-            'cour7' => 'cours7',
-        ]);
-    }
-
-    #[Route('/home/cours/TleS', name: 'app_cours_TleS')]
-    public function cours8(): Response
-    {
-        return $this->render('cours/cour8.html.twig', [
-            'cour8' => 'cours8',
-        ]);
-    }
-
-    #[Route('/home/cours/TleL', name: 'app_cours_TleL')]
-    public function cours9(): Response
-    {
-        return $this->render('cours/cour9.html.twig', [
-            'cour9' => 'cours9',
-        ]);
-    }
-
-    
     
 }

@@ -17,32 +17,39 @@
 			</thead>
 			<tbody>
 				{% for a in chap %}
-
-
 					<tr>
 						<td>{{ a.title }}</td>
-						<td>{{ a.cours.title }}</td>
-						<td>{{ a.cours.niveau.title}}</td>
+						<td>{{ a.cours.coursTitle }}</td>
+						<td>{{ a.cours.niveau.niveauTitle }}</td>
 						{% if  a.isAvailable == true %}
 						<td><i class="fas fa-toggle-on"></i></td>
 						{% else %}
 							<td><i class="fas fa-toggle-off"></i></td>
 						{% endif %}
-						<td><a href="{{ path('app_admin.edit', {id: a.id}) }}" class="btn btn-secondary">
+						<td><a href="{{ path('chapitre_new', {id: a.id}) }}" class="btn btn-primary">
+                            <i class="fas fa-folder-plus"></i></a>
+							<a href="{{ path('app_admin.edit', {id: a.id}) }}" class="btn btn-secondary">
                             <i class="fas fa-edit"></i></a>
 							<a href="{{ path('app_admin.delete', {id: a.id}) }}" class="btn btn-danger" 
                             onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette annonce ?')" >
                             <i class="fas fa-trash-alt"></i></a>
 						</td>
 					</tr>
+				
 				{% endfor %}
 			</tbody>
 		</table>
 		<div class="row">
+			{# <div class="col-md-3">
+				<div class="btn btn-secondary">
+					<a href="{{ path('cours_new', {id: chap.cours.niveau.id})}}">
+					<u style="color:white;">Ajouter un cours</u> </a>
+				</div>
+			</div> #}
 			<div class="col-md-3">
 				<div class="btn btn-secondary">
-					<a href="{{ path('app_admin.new')}}">
-					<u style="color:white;">Publier une cours</u> </a>
+					<a href="{{ path('niveau_new')}}">
+					<strong style="color:white;">Ajouter un niveau</strong> </a>
 				</div>
 			</div>
 		</div>

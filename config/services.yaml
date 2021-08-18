@@ -5,6 +5,8 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
     locale: "fr"
+    document_extension_directory: '%kernel.project_dir%/public/uploads/doc_extension'
+    video_extension_directory: '%kernel.project_dir%/public/uploads/video_extension'
 
 
 services:

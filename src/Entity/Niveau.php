@@ -10,6 +10,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=NiveauRepository::class)
  */
+
+  /**
+ * @ORM\Entity()
+ * @ORM\HasLifecycleCallbacks()
+ */
 class Niveau
 {
     /**
@@ -22,7 +27,7 @@ class Niveau
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $title;
+    private $niveauTitle;
 
     /**
      * @ORM\Column(type="datetime")
@@ -30,7 +35,7 @@ class Niveau
     private $createdAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="niveau", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Cours::class, mappedBy="niveau", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $cours;
 
@@ -44,28 +49,31 @@ class Niveau
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getNiveauTitle(): ?string
     {
-        return $this->title;
+        return $this->niveauTitle;
     }
 
-    public function setTitle(string $title): self
+    public function setNiveauTitle(string $niveauTitle): self
     {
-        $this->title = $title;
+        $this->niveauTitle = $niveauTitle;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTime $createdAt): self
-    {
-        $this->createdAt = $createdAt;
 
-        return $this;
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+    */
+    public function setCreatedAt()
+    {
+        $this->createdAt = new \DateTime();
     }
 
     /**

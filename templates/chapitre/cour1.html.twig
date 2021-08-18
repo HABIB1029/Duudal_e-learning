@@ -15,12 +15,12 @@
 	<!-- End heat text -->
     	{# section Document #}
 	<div class="container">
-
+		{% for a in cour1 %}
 		<div class="alert alert-success" role="alert">
-			<a href="http://exo7.emath.fr/cours/livre-algebre-1.pdf" class="alert-link">Les nomble relative</a>
+			<a href="http://exo7.emath.fr/cours/livre-algebre-1.pdf" class="alert-link">{{ a.title }}</a>
 		</div>
 
-		<div class="alert alert-success" role="alert">
+		{# <div class="alert alert-success" role="alert">
 			<a href="#" class="alert-link">Nombres décimaux arithmétiques</a>
 		</div>
 
@@ -38,8 +38,8 @@
 		<div class="alert alert-success" role="alert">
 			<a href="#" class="alert-link">Multiplication des nombres décimaux
 				arithmétiques</a>
-		</div>
-
+		</div> #}
+	{% endfor %}
 
 	</div>
 

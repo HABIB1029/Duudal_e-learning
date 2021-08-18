@@ -27,7 +27,7 @@ class ChapitreType extends AbstractType
                 ]
             ])
             ->add('documentExtension', FileType::class, [
-                'label'=> 'document',
+                'label'=> 'fichier PDF',
                 'mapped' => false,
                 'required' => false,
             ])
